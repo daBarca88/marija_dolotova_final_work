@@ -4,11 +4,13 @@ import lv.lu.finalwork.model.repository.Product;
 import lv.lu.finalwork.model.repository.ProductCategory;
 import lv.lu.finalwork.model.ui.ProductData;
 import lv.lu.finalwork.model.ui.ProductInputData;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 
 // klase kas atbild par konvertesanu.ir redzama tikai Service mape - paligklase ProductService klasei
+@Component
 public class ProductMapper {
 
     public Product mapFrom(ProductInputData productInputData) {
