@@ -5,27 +5,33 @@ import lv.lu.finalwork.model.repository.Product;
 import lv.lu.finalwork.model.ui.ProductData;
 import lv.lu.finalwork.model.ui.ProductInputData;
 import lv.lu.finalwork.repository.ProductRepository;
+import lv.lu.finalwork.validation.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class ProductService {
 
     private final ProductRepository repository;
     private final ProductMapper mapper;
+    private final ProductValidator productValidator;
 
     @Autowired
-    public ProductService(ProductRepository repository, ProductMapper mapper) {
+    public ProductService(ProductRepository repository, ProductMapper mapper, ProductValidator productValidator) {
         this.repository = repository;
         this.mapper = mapper;
+        this.productValidator = productValidator;
     }
 
     public void save(ProductInputData productInputData) {
-        repository.save(mapper.mapFrom(productInputData));
+        productValidator.validate(productInputData);
+        final Product product = mapper.mapFrom(productInputData);
+
+        repository.save(product);
     }
 
 

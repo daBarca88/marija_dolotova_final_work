@@ -2,12 +2,11 @@ package lv.lu.finalwork.repository;
 
 import lv.lu.finalwork.model.repository.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 
 import java.util.*;
 
-@Component
+@org.springframework.stereotype.Repository
 public class ProductRepository implements Repository<Product> {
 
     private final Map<Long, Product> repository;
