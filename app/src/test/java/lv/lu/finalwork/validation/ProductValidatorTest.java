@@ -1,14 +1,13 @@
 package lv.lu.finalwork.validation;
 
 import lv.lu.finalwork.model.ProductValidationException;
-import lv.lu.finalwork.model.repository.ProductCategory;
+import lv.lu.finalwork.domain.ProductCategory;
 import lv.lu.finalwork.model.ui.ProductInputData;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static org.junit.Assert.*;
 
 public class ProductValidatorTest {
     

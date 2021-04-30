@@ -1,6 +1,6 @@
 package lv.lu.finalwork.repository;
 
-import lv.lu.finalwork.model.repository.Product;
+import lv.lu.finalwork.domain.Product;
 import org.junit.Before;
 import org.junit.Test;
 

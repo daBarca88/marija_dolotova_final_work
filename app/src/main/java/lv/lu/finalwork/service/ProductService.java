@@ -1,10 +1,10 @@
 package lv.lu.finalwork.service;
 
 import lv.lu.finalwork.model.ItemNotFoundException;
-import lv.lu.finalwork.model.repository.Product;
+import lv.lu.finalwork.domain.Product;
 import lv.lu.finalwork.model.ui.ProductData;
 import lv.lu.finalwork.model.ui.ProductInputData;
-import lv.lu.finalwork.repository.ProductRepository;
+import lv.lu.finalwork.repository.Repository;
 import lv.lu.finalwork.validation.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
 
-    private final ProductRepository repository;
+    private final Repository<Product> repository;
     private final ProductMapper mapper;
     private final ProductValidator productValidator;
 
     @Autowired
-    public ProductService(ProductRepository repository, ProductMapper mapper, ProductValidator productValidator) {
+    public ProductService(Repository<Product> repository, ProductMapper mapper, ProductValidator productValidator) {
         this.repository = repository;
         this.mapper = mapper;
         this.productValidator = productValidator;
@@ -32,21 +32,6 @@ public class ProductService {
         final Product product = mapper.mapFrom(productInputData);
 
         repository.save(product);
-    }
-
-
-    public Product findById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Product Id can't be null");
-        }
-
-        Optional<Product> result = repository.findById(id);
-        if (!result.isPresent()) {
-            throw new ItemNotFoundException(
-                    String.format("Product by id: %d is not found", id));
-        }
-
-        return result.get();
     }
 
     public List<ProductData> findAll() {
@@ -63,6 +48,19 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public Product findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Product Id can't be null");
+        }
+
+        Optional<Product> result = repository.findById(id);
+        if (!result.isPresent()) {
+            throw new ItemNotFoundException(
+                    String.format("Product by id: %d is not found", id));
+        }
+
+        return result.get();
+    }
 
     public void delete(Long id) {
 
