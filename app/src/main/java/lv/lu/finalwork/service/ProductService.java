@@ -4,25 +4,25 @@ import lv.lu.finalwork.model.ItemNotFoundException;
 import lv.lu.finalwork.domain.Product;
 import lv.lu.finalwork.model.ui.ProductData;
 import lv.lu.finalwork.model.ui.ProductInputData;
-import lv.lu.finalwork.repository.Repository;
+import lv.lu.finalwork.repository.ProductCrudRepository;
 import lv.lu.finalwork.validation.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class ProductService {
 
-    private final Repository<Product> repository;
+    private final ProductCrudRepository repository;
     private final ProductMapper mapper;
     private final ProductValidator productValidator;
 
     @Autowired
-    public ProductService(Repository<Product> repository, ProductMapper mapper, ProductValidator productValidator) {
+    public ProductService(ProductCrudRepository  repository, ProductMapper mapper, ProductValidator productValidator) {
         this.repository = repository;
         this.mapper = mapper;
         this.productValidator = productValidator;
@@ -43,10 +43,14 @@ public class ProductService {
 //        }
 //        return result;
 
-        return repository.findAll().stream()
-//                .map(product -> mapper.mapFrom(product))
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::mapFrom)
                 .collect(Collectors.toList());
+
+//        return repository.findAll().stream()
+//
+//                .map(mapper::mapFrom)   //                .map(product -> mapper.mapFrom(product))
+//                .collect(Collectors.toList());
     }
 
     public ProductData findById(Long id) {
@@ -66,6 +70,7 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+
+        repository.findById(id).ifPresent(repository::delete);
     }
 }
