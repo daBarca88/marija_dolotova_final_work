@@ -43,7 +43,16 @@ public class ConsulUI {
             case 2:
                 retrieveProductList();
                 break;
+            case 3:
+                retrieveProductById();
+                break;
         }
+    }
+
+    private void retrieveProductById() {
+        System.out.println("Enter product id..");
+
+        System.out.println(service.findById(scanner.nextLong()));
     }
 
     private void retrieveProductList() {
@@ -76,6 +85,7 @@ public class ConsulUI {
         System.out.println(" Chose one option: \n");
         System.out.println(" Save product - 1");
         System.out.println(" List all products - 2");
+        System.out.println(" Retrieve product with exact id - 3");
         System.out.println(" Exit application - 0");
         System.out.println(" Please enter the choice");
     }

@@ -9,6 +9,7 @@ import lv.lu.finalwork.validation.ProductValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Product findById(Long id) {
+    public ProductData findById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Product Id can't be null");
         }
@@ -59,7 +60,9 @@ public class ProductService {
                     String.format("Product by id: %d is not found", id));
         }
 
-        return result.get();
+        Product product = result.get();
+        return mapper.mapFrom(product);
+
     }
 
     public void delete(Long id) {

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -48,11 +49,14 @@ public class ProductOrmRepository implements lv.lu.finalwork.repository.Reposito
 
     @Override
     public Optional<Product> findById(Long id) {
-        return Optional.empty();
+        return Optional.ofNullable(sessionFactory.getCurrentSession().get(Product.class, id));
+
     }
 
     @Override
     public void delete(Long id) {
+        Product product = this.sessionFactory.getCurrentSession().get(Product.class, id);
+        this.sessionFactory.getCurrentSession().delete(product);
 
     }
 }
