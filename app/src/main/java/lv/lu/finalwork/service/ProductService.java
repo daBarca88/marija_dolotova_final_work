@@ -66,6 +66,6 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-
+        repository.delete(id);
     }
 }

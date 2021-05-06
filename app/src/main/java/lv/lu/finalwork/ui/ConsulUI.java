@@ -46,12 +46,19 @@ public class ConsulUI {
             case 3:
                 retrieveProductById();
                 break;
+            case 4:
+                deleteProductById();
+                break;
         }
+    }
+
+    private void deleteProductById() {
+        System.out.println("Enter product id..");
+        service.delete(scanner.nextLong());
     }
 
     private void retrieveProductById() {
         System.out.println("Enter product id..");
-
         System.out.println(service.findById(scanner.nextLong()));
     }
 
@@ -59,7 +66,6 @@ public class ConsulUI {
 //        for(Product product : service.findAll()) {
 //            System.out.println(product);
 //        }
-
         service.findAll().stream()
                 .forEach(System.out::println);
     }
@@ -86,6 +92,7 @@ public class ConsulUI {
         System.out.println(" Save product - 1");
         System.out.println(" List all products - 2");
         System.out.println(" Retrieve product with exact id - 3");
+        System.out.println(" Delete product with exact id - 4");
         System.out.println(" Exit application - 0");
         System.out.println(" Please enter the choice");
     }
